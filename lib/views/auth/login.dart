@@ -1,5 +1,5 @@
 import 'package:dear_jobs/views/auth/forgotpaswd.dart';
-import 'package:dear_jobs/views/auth/signin.dart';
+import 'package:dear_jobs/views/auth/signup.dart';
 import 'package:dear_jobs/views/bottomnavbar/bottomnavbar.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';

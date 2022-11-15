@@ -44,6 +44,7 @@ dependencies:
   flutter_rating_stars: ^1.0.3+4
   font_awesome_flutter: ^10.2.1
   flutter_zoom_drawer: ^2.1.1
+  http: ^0.13.5
 
 
 flutter_native_splash:

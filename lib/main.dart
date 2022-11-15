@@ -1,3 +1,4 @@
+import 'package:dear_jobs/views/auth/signup.dart';
 import 'package:dear_jobs/views/bottomnavbar/bottomnavbar.dart';
 import 'package:dear_jobs/views/companies/companysinglepage.dart';
 import 'package:dear_jobs/views/dashboard.dart';
@@ -30,6 +31,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const DashboardScreen());
+        home: const SignUpScreen());
   }
 }
