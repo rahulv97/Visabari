@@ -1,3 +1,4 @@
+import 'package:dear_jobs/views/auth/login.dart';
 import 'package:dear_jobs/views/auth/signup.dart';
 import 'package:dear_jobs/views/bottomnavbar/bottomnavbar.dart';
 import 'package:dear_jobs/views/companies/companysinglepage.dart';
@@ -5,6 +6,7 @@ import 'package:dear_jobs/views/dashboard.dart';
 import 'package:dear_jobs/views/message/chatscreen.dart';
 import 'package:dear_jobs/views/message/messagepage.dart';
 import 'package:dear_jobs/views/newjobs/jobsingle.dart';
+import 'package:dear_jobs/views/profile/editprofile.dart';
 import 'package:dear_jobs/views/profile/showprofile.dart';
 import 'package:dear_jobs/widget/filterscreen.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SignUpScreen());
+        home: const EditProfile());
   }
 }

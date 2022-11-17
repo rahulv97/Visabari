@@ -12,6 +12,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  GlobalKey<FormState> _formKey = GlobalKey();
+  TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -51,10 +53,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       padding:
                           const EdgeInsets.only(top: 210, left: 20, right: 20),
                       child: Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height / 4.5,
                             width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.only(bottom: 25),
                             decoration: BoxDecoration(
                               color: white,
                               borderRadius: BorderRadius.circular(20),
@@ -67,56 +70,75 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               ],
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 30),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Email Address',
-                                    suffixIcon: Icon(
-                                      Icons.email,
-                                      color: grey,
+                            child: Form(
+                              key: _formKey,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 30),
+                                  TextFormField(
+                                    keyboardType: TextInputType.emailAddress,
+                                    controller: emailController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Email Address',
+                                      suffixIcon: Icon(
+                                        Icons.email,
+                                        color: grey,
+                                      ),
                                     ),
+                                    validator: (email) {
+                                      if (email == null || email.isEmpty) {
+                                        return 'Please enter email';
+                                      }
+                                      if (!RegExp(
+                                              "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]+.com")
+                                          .hasMatch(email)) {
+                                        return 'Please enter valid email';
+                                      }
+                                      return null;
+                                    },
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 50),
+                                ],
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 130),
+                          Container(
+                            alignment: Alignment.bottomCenter,
                             child: Container(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                    color: white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: white,
-                                      width: 3,
-                                    ),
-                                    gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: [
-                                          upColor,
-                                          downColor,
-                                        ]),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color(0x29000000),
-                                        offset: Offset(0, 5),
-                                        blurRadius: 6,
-                                      )
-                                    ]),
-                                child: IconButton(
-                                  onPressed: () {
-                                    Get.to(() => const ConfirmPasswordScreen());
-                                  },
-                                  icon: const Icon(Icons.arrow_forward),
-                                  iconSize: 40,
+                              height: 60,
+                              decoration: BoxDecoration(
                                   color: white,
-                                ),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: white,
+                                    width: 3,
+                                  ),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        upColor,
+                                        downColor,
+                                      ]),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color(0x29000000),
+                                      offset: Offset(0, 5),
+                                      blurRadius: 6,
+                                    )
+                                  ]),
+                              child: IconButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    Get.off(
+                                        () => const ConfirmPasswordScreen());
+                                  }
+                                },
+                                icon: const Icon(Icons.arrow_forward),
+                                iconSize: 40,
+                                color: white,
                               ),
                             ),
                           ),

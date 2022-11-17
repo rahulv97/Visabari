@@ -1,3 +1,4 @@
+import 'package:dear_jobs/network/apiservice.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 enum SingingCharacter { male, female }
+
+List country = [];
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -26,6 +29,21 @@ class _EditProfileState extends State<EditProfile> {
     'Flutter',
     'Flutter',
   ];
+
+  String countryLabel = 'Country';
+  int countrySelected = 0;
+
+  void getdata() async {
+    setState(() {
+      ApiService().countries();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -307,12 +325,85 @@ class _EditProfileState extends State<EditProfile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                width: 150,
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    labelText: "Country",
-                                    hintText: 'Enter Country',
+                              GestureDetector(
+                                onTap: () async {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text("Countries"),
+                                        content: ListView.builder(
+                                          itemCount: country.length,
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              onTap: () {
+                                                setState(() {
+                                                  countrySelected =
+                                                      int.parse(country[index]);
+                                                  countryLabel = country[index];
+                                                });
+                                                Get.back();
+                                              },
+                                              trailing: Container(
+                                                height: 12,
+                                                width: 12,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                  border: index ==
+                                                          countrySelected
+                                                      ? Border.all(
+                                                          width: 2, color: red)
+                                                      : Border.all(
+                                                          width: 2,
+                                                          color: Colors.grey
+                                                              .withOpacity(0.7),
+                                                        ),
+                                                ),
+                                                child: Center(
+                                                  child: Container(
+                                                    height: 6,
+                                                    width: 6,
+                                                    decoration: BoxDecoration(
+                                                      color: countrySelected ==
+                                                              index
+                                                          ? red
+                                                          : Colors.white,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              title: Text(
+                                                "${country[index]}",
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  height: 35,
+                                  width: 150,
+                                  color: white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        countryLabel,
+                                        style: TextDesign().bigbuttontext,
+                                      ),
+                                      Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: grey,
+                                        size: 24.0,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -328,7 +419,6 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
                         ],
                       ),
                     ),
@@ -430,7 +520,8 @@ class _EditProfileState extends State<EditProfile> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
                             child: TextFormField(
                               decoration: const InputDecoration(
                                 labelText: "Skills",

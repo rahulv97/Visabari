@@ -23,6 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController roleController = TextEditingController();
   TextEditingController pswdController = TextEditingController();
+  // ignore: prefer_final_fields
   GlobalKey<FormState> _formkey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -252,13 +253,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: IconButton(
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
-                                  Get.to(() => ApiService().registerUser(
+                                  ApiService().registerUser(
                                       context,
                                       nameController.text,
                                       phoneController.text,
                                       emailController.text,
                                       pswdController.text,
-                                      "Agent"));
+                                      'Agent');
                                 }
                               },
                               icon: const Icon(Icons.arrow_forward),

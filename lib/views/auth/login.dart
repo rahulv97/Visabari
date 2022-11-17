@@ -1,6 +1,6 @@
+import 'package:dear_jobs/network/apiservice.dart';
 import 'package:dear_jobs/views/auth/forgotpaswd.dart';
 import 'package:dear_jobs/views/auth/signup.dart';
-import 'package:dear_jobs/views/bottomnavbar/bottomnavbar.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
 import 'package:flutter/gestures.dart';
@@ -17,6 +17,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isRember = false;
   bool isPasswordVisible = true;
+  // ignore: prefer_final_fields
+  GlobalKey<FormState> _formKey = GlobalKey();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController pswdController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -56,10 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:
                           const EdgeInsets.only(top: 210, left: 20, right: 20),
                       child: Stack(
+                        alignment: AlignmentDirectional.bottomCenter,
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height / 3,
                             width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(bottom: 25),
                             decoration: BoxDecoration(
                               color: white,
                               borderRadius: BorderRadius.circular(20),
@@ -72,115 +77,136 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 40),
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Username',
-                                    suffixIcon: Icon(
-                                      Icons.person,
-                                      color: grey,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  obscureText: isPasswordVisible,
-                                  decoration: InputDecoration(
-                                    hintText: 'Password',
-                                    suffixIcon: IconButton(
-                                      onPressed: () => setState(() =>
-                                          isPasswordVisible =
-                                              !isPasswordVisible),
-                                      icon: isPasswordVisible
-                                          ? const Icon(Icons.visibility_off)
-                                          : const Icon(Icons.visibility),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Checkbox(
-                                          materialTapTargetSize:
-                                              MaterialTapTargetSize.shrinkWrap,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          value: isRember,
-                                          onChanged: (value) {
-                                            setState(() => isRember = value!);
-                                          },
-                                          activeColor: blue,
-                                        ),
-                                        const Text(
-                                          "Remember me",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Get.to(
-                                            () => const ForgotPasswordScreen());
-                                      },
-                                      child: Text(
-                                        "Forgot Password",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: downColor,
-                                            decorationThickness: 2),
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 40),
+                                  TextFormField(
+                                    keyboardType: TextInputType.name,
+                                    controller: emailController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Email',
+                                      suffixIcon: Icon(
+                                        Icons.email,
+                                        color: grey,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
+                                    validator: (username) {
+                                      if (username!.isEmpty) {
+                                        return 'enter username';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextFormField(
+                                    obscureText: isPasswordVisible,
+                                    decoration: InputDecoration(
+                                      hintText: 'Password',
+                                      suffixIcon: IconButton(
+                                        onPressed: () => setState(() =>
+                                            isPasswordVisible =
+                                                !isPasswordVisible),
+                                        icon: isPasswordVisible
+                                            ? const Icon(Icons.visibility_off)
+                                            : const Icon(Icons.visibility),
+                                      ),
+                                    ),
+                                    validator: (password) {
+                                      if (password!.isEmpty) {
+                                        return 'enter password';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                            materialTapTargetSize:
+                                                MaterialTapTargetSize
+                                                    .shrinkWrap,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            value: isRember,
+                                            onChanged: (value) {
+                                              setState(() => isRember = value!);
+                                            },
+                                            activeColor: blue,
+                                          ),
+                                          const Text(
+                                            "Remember me",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.to(() =>
+                                              const ForgotPasswordScreen());
+                                        },
+                                        child: Text(
+                                          "Forgot Password",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: downColor,
+                                              decorationThickness: 2),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 30),
+                                ],
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 215),
+                          Container(
+                            alignment: Alignment.bottomCenter,
                             child: Container(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                    color: white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: white,
-                                      width: 3,
-                                    ),
-                                    gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: [
-                                          upColor,
-                                          downColor,
-                                        ]),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color(0x29000000),
-                                        offset: Offset(0, 5),
-                                        blurRadius: 6,
-                                      )
-                                    ]),
-                                child: IconButton(
-                                  onPressed: () {
-                                    Get.to(() => const BottomNavbarScreen());
-                                  },
-                                  icon: const Icon(Icons.arrow_forward),
-                                  iconSize: 40,
+                              height: 60,
+                              decoration: BoxDecoration(
                                   color: white,
-                                ),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: white,
+                                    width: 3,
+                                  ),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        upColor,
+                                        downColor,
+                                      ]),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color(0x29000000),
+                                      offset: Offset(0, 5),
+                                      blurRadius: 6,
+                                    )
+                                  ]),
+                              child: IconButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    ApiService().userLogin(
+                                        context,
+                                        emailController.text,
+                                        pswdController.text);
+                                  }
+                                },
+                                icon: const Icon(Icons.arrow_forward),
+                                iconSize: 40,
+                                color: white,
                               ),
                             ),
                           ),
