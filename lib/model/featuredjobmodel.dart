@@ -1,79 +1,17 @@
 class FeaturedJobModel {
-  String? heading, subheading, description, pricerange;
+  String? heading, companytitle, country, city, description, salmin, salmax;
   String? image;
 
   FeaturedJobModel({
     this.heading,
-    this.subheading,
+    this.companytitle,
+    this.country,
+    this.city,
     this.description,
     this.image,
-    this.pricerange,
+    this.salmin,
+    this.salmax,
   });
 }
 
-List<FeaturedJobModel> featuredjobContent = [
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  FeaturedJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-];
+List<FeaturedJobModel> featuredjobContent = [];

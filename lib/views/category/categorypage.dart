@@ -1,7 +1,10 @@
-import 'package:dear_jobs/model/allcategorymodel.dart';
+import 'package:dear_jobs/model/categorymodel.dart';
+import 'package:dear_jobs/network/apiconstant.dart';
+import 'package:dear_jobs/views/category/subCategory.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -52,38 +55,51 @@ class _CategoryScreenState extends State<CategoryScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                  child: Container(
-                    width: 110,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: grey,
-                          blurRadius: 1,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        Image(
-                          image: AssetImage(
-                              categoryContent[index].image.toString()),
-                          height: 25,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          categoryContent[index].title.toString(),
-                          style: TextDesign().smallboldtext,
-                        ),
-                        Text(
-                            "("
-                            '${categoryContent[index].jobcount}'
-                            " Jobs)",
-                            style: TextDesign().smallgreytext),
-                        const SizedBox(height: 20),
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => SubCategoryScreen(
+                            id: categoryContent[index].catid.toString(),
+                            name: categoryContent[index].title.toString(),
+                          ));
+                    },
+                    child: Container(
+                      width: 110,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: grey,
+                            blurRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          Image(
+                            image: NetworkImage(ApiConstant.imagBaseUrl +
+                                categoryContent[index].image.toString()),
+                            height: 25,
+                          ),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              categoryContent[index].title.toString(),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextDesign().smallboldtext,
+                            ),
+                          ),
+                          Text(
+                              "("
+                              '${categoryContent[index].jobcount}'
+                              " Jobs)",
+                              style: TextDesign().smallgreytext),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
                     ),
                   ),
                 ),

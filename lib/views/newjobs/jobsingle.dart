@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
+import 'package:dear_jobs/model/newjobmodel.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
 import 'package:dear_jobs/widget/tabviewbar.dart';
@@ -5,7 +8,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class JobSingleScreen extends StatefulWidget {
-  const JobSingleScreen({Key? key}) : super(key: key);
+  final heading;
+  final image;
+  final companytitle;
+  final country;
+  final city;
+  final description;
+  final salmin;
+  final salmax;
+  final jobtype;
+  final deadline;
+  final id;
+  const JobSingleScreen(
+      {Key? key,
+      this.heading,
+      this.jobtype,
+      this.image,
+      this.companytitle,
+      this.country,
+      this.city,
+      this.description,
+      this.salmin,
+      this.salmax,
+      this.deadline,
+      this.id})
+      : super(key: key);
 
   @override
   State<JobSingleScreen> createState() => _JobSingleScreenState();
@@ -64,21 +91,35 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 10),
-                        const Image(
-                          image: AssetImage("assets/wordpress.png"),
-                          height: 50,
+                        Image(
+                          image: NetworkImage(widget.image),
+                          height: 60,
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          "WordPress Designing",
+                          widget.heading,
                           style: TextDesign().headingtext,
                         ),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "\$75,000 - \$90,000 a year",
-                              style: TextDesign().lighttext,
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  widget.salmin + ' - ',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextDesign().lighttext,
+                                ),
+                                Text(
+                                  widget.salmax + " a year",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextDesign().lighttext,
+                                ),
+                              ],
                             ),
                             const SizedBox(width: 20),
                             Container(
@@ -96,7 +137,7 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Full Time',
+                                  widget.jobtype,
                                   style: TextDesign().lighttext,
                                 ),
                               ),
@@ -104,50 +145,54 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  image: const DecorationImage(
-                                      image: AssetImage("assets/cmp3.png"),
-                                      fit: BoxFit.cover)),
-                            ),
-                            const SizedBox(width: 10),
-                            SizedBox(
-                              height: 50,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Webstort Technology',
-                                    style: TextDesign().headingtext,
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Icon(
-                                        CupertinoIcons.location_solid,
-                                        size: 20,
-                                        color: grey,
-                                      ),
-                                      Text(
-                                        'Loss Angles',
-                                        style: TextDesign().lighttext,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                  image: DecorationImage(
+                                      image: NetworkImage(widget.image),
+                                      fit: BoxFit.cover),
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 30),
-                            Text(
-                              '15 Days Left',
-                              style: TextDesign().smallgreytext,
-                            ),
-                          ],
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                height: 50,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.companytitle,
+                                      style: TextDesign().headingtext,
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.location_solid,
+                                          size: 20,
+                                          color: grey,
+                                        ),
+                                        Text(
+                                          widget.country,
+                                          style: TextDesign().lighttext,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 30),
+                              Text(
+                                widget.deadline,
+                                style: TextDesign().smallgreytext,
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 10),
                       ],

@@ -1,3 +1,4 @@
+import 'package:dear_jobs/model/countrymodel.dart';
 import 'package:dear_jobs/network/apiservice.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
@@ -6,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 enum SingingCharacter { male, female }
-
-List country = [];
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -35,7 +34,7 @@ class _EditProfileState extends State<EditProfile> {
 
   void getdata() async {
     setState(() {
-      ApiService().countries();
+      // ApiService().countries();
     });
   }
 
@@ -333,15 +332,11 @@ class _EditProfileState extends State<EditProfile> {
                                       return AlertDialog(
                                         title: const Text("Countries"),
                                         content: ListView.builder(
-                                          itemCount: country.length,
+                                          itemCount: countryList.length,
                                           itemBuilder: (context, index) {
                                             return ListTile(
                                               onTap: () {
-                                                setState(() {
-                                                  countrySelected =
-                                                      int.parse(country[index]);
-                                                  countryLabel = country[index];
-                                                });
+                                                setState(() {});
                                                 Get.back();
                                               },
                                               trailing: Container(
@@ -374,9 +369,9 @@ class _EditProfileState extends State<EditProfile> {
                                                   ),
                                                 ),
                                               ),
-                                              title: Text(
-                                                "${country[index]}",
-                                              ),
+                                              title: Text(countryList[index]
+                                                  .country
+                                                  .toString()),
                                             );
                                           },
                                         ),

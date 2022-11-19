@@ -1,55 +1,31 @@
 class NewJobModel {
-  String? heading, subheading, description, pricerange;
+  String? heading,
+      companytitle,
+      country,
+      city,
+      description,
+      salmin,
+      salmax,
+      jobtype,
+      qualification,
+      deadline,
+      id;
   String? image;
 
   NewJobModel({
     this.heading,
-    this.subheading,
+    this.companytitle,
+    this.country,
+    this.city,
     this.description,
     this.image,
-    this.pricerange,
+    this.salmin,
+    this.salmax,
+    this.jobtype,
+    this.qualification,
+    this.deadline,
+    this.id,
   });
 }
 
-List<NewJobModel> jobContent = [
-  NewJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  NewJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  NewJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  NewJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-  NewJobModel(
-    image: "assets/android.png",
-    heading: "Product Designing",
-    subheading: "Facebook Inc. Los Angles,CA",
-    description:
-        "It is a long established fact that a reader will be distracted by content of a page when looking at its layout",
-    pricerange: "\$35,000 - \$85,000 a year",
-  ),
-];
+List<NewJobModel> jobContent = [];

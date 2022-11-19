@@ -1,4 +1,5 @@
 import 'package:dear_jobs/model/newjobmodel.dart';
+import 'package:dear_jobs/network/apiconstant.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
 import 'package:dear_jobs/views/newjobs/jobsingle.dart';
@@ -56,9 +57,9 @@ class _NewJobsScreenState extends State<NewJobsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListView.builder(
-                  shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: jobContent.length,
+                  shrinkWrap: true,
+                  itemCount: jobContent.length <= 2 ? jobContent.length : 2,
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -92,9 +93,11 @@ class _NewJobsScreenState extends State<NewJobsScreen> {
                                       Row(
                                         children: [
                                           Image(
-                                            image: AssetImage(jobContent[index]
-                                                .image
-                                                .toString()),
+                                            image: NetworkImage(
+                                                ApiConstant.imagBaseUrl +
+                                                    jobContent[index]
+                                                        .image
+                                                        .toString()),
                                             height: 25,
                                           ),
                                           const SizedBox(width: 15),
@@ -105,9 +108,7 @@ class _NewJobsScreenState extends State<NewJobsScreen> {
                                               SizedBox(
                                                 width: 200,
                                                 child: Text(
-                                                  jobContent[index]
-                                                      .heading
-                                                      .toString(),
+                                                  "${jobContent[index].heading.toString()}",
                                                   maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -117,16 +118,34 @@ class _NewJobsScreenState extends State<NewJobsScreen> {
                                               ),
                                               const SizedBox(height: 2),
                                               SizedBox(
-                                                width: 200,
-                                                child: Text(
-                                                  jobContent[index]
-                                                      .subheading
-                                                      .toString(),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextDesign()
-                                                      .smallgreytext,
+                                                width: 220,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "${jobContent[index].companytitle.toString()}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextDesign()
+                                                          .smallgreytext,
+                                                    ),
+                                                    Text(
+                                                      "${jobContent[index].country.toString()}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextDesign()
+                                                          .smallgreytext,
+                                                    ),
+                                                    Text(
+                                                      "${jobContent[index].city.toString()}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextDesign()
+                                                          .smallgreytext,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -142,7 +161,7 @@ class _NewJobsScreenState extends State<NewJobsScreen> {
                                   ),
                                   const SizedBox(height: 10),
                                   Text(
-                                    jobContent[index].description.toString(),
+                                    "${jobContent[index].description.toString()}",
                                     style: TextDesign().descriptiontext,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -152,9 +171,24 @@ class _NewJobsScreenState extends State<NewJobsScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        jobContent[index].pricerange.toString(),
-                                        style: TextDesign().pricetext,
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            "${jobContent[index].salmin.toString()}"
+                                            ' - ',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextDesign().pricetext,
+                                          ),
+                                          Text(
+                                            "${jobContent[index].salmax.toString()}"
+                                            ' a year',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextDesign().pricetext,
+                                          ),
+                                        ],
                                       ),
                                       Container(
                                         height: 30,

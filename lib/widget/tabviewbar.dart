@@ -40,7 +40,7 @@ class _TabViewWidgetState extends State<TabViewWidget> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height * 1.5,
             width: double.infinity,
             child: const TabBarView(
               children: [

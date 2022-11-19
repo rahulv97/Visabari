@@ -1,28 +1,52 @@
 import 'package:dear_jobs/model/relatedjobsmodel.dart';
+import 'package:dear_jobs/network/apiservice.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
+import 'package:dear_jobs/views/relatedjobs/relatedjobspage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+List education = [
+  "It is a long established fact that a reader will be distracted by content of"
+];
 
 class TabViewScreenFirst extends StatefulWidget {
-  const TabViewScreenFirst({Key? key}) : super(key: key);
+  final id;
+  const TabViewScreenFirst({Key? key, this.id}) : super(key: key);
 
   @override
   State<TabViewScreenFirst> createState() => _TabViewScreenFirstState();
 }
 
 class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
-  List education = [
-    "It is a long established fact that a reader will be distracted by content of"
-  ];
+  bool isLoading = false;
+
+  void getjobData() async {
+    setState(() {
+      isLoading = true;
+    });
+    // await ApiService().jobDetailApi(widget.id);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getjobData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
@@ -30,6 +54,7 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
                 style: TextDesign().headingtext,
               ),
             ),
+            const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
@@ -279,16 +304,31 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: Text(
-                'RELATED JOBS',
-                style: TextDesign().headingtext,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'RELATED JOBS',
+                    style: TextDesign().headingtext,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Get.to(() => const RelatedJobScreen());
+                    },
+                    child: Text(
+                      ' See All',
+                      style: TextDesign().clrtext,
+                    ),
+                  ),
+                ],
               ),
             ),
             ListView.builder(
                 shrinkWrap: true,
-                // physics: const BouncingScrollPhysics(),
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: RelatedjobsContent.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: RelatedjobsContent.length <= 3
+                    ? RelatedjobsContent.length
+                    : 3,
                 itemBuilder: (BuildContext context, index) {
                   return Padding(
                     padding:

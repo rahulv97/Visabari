@@ -1,8 +1,10 @@
 import 'package:dear_jobs/model/reviewmodel.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
+import 'package:dear_jobs/views/review/companyreviewscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:get/get.dart';
 
 class TabViewScreenSecond extends StatefulWidget {
   const TabViewScreenSecond({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class _TabViewScreenSecondState extends State<TabViewScreenSecond> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -273,6 +275,7 @@ class _TabViewScreenSecondState extends State<TabViewScreenSecond> {
               style: TextDesign().headingtext,
             ),
           ),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
@@ -343,11 +346,31 @@ class _TabViewScreenSecondState extends State<TabViewScreenSecond> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'REVIEW ',
+                  style: TextDesign().headingtext,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.to(() => const ReviewScreen());
+                  },
+                  child: Text(
+                    ' See All',
+                    style: TextDesign().clrtext,
+                  ),
+                ),
+              ],
+            ),
+          ),
           ListView.builder(
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
-              itemCount: reviewContent.length,
+              itemCount: reviewContent.length < 4 ? reviewContent.length : 4,
               itemBuilder: (BuildContext context, index) {
                 return Padding(
                   padding:

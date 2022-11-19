@@ -1,4 +1,5 @@
 import 'package:dear_jobs/model/featuredjobmodel.dart';
+import 'package:dear_jobs/network/apiconstant.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
 import 'package:dear_jobs/views/newjobs/jobsingle.dart';
@@ -56,9 +57,11 @@ class _FeaturedJobScreenState extends State<FeaturedJobScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListView.builder(
-                  physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: featuredjobContent.length,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: featuredjobContent.length <= 2
+                      ? featuredjobContent.length
+                      : 2,
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -92,10 +95,11 @@ class _FeaturedJobScreenState extends State<FeaturedJobScreen> {
                                       Row(
                                         children: [
                                           Image(
-                                            image: AssetImage(
-                                                featuredjobContent[index]
-                                                    .image
-                                                    .toString()),
+                                            image: NetworkImage(
+                                                ApiConstant.imagBaseUrl +
+                                                    featuredjobContent[index]
+                                                        .image
+                                                        .toString()),
                                             height: 25,
                                           ),
                                           const SizedBox(width: 15),
@@ -119,15 +123,39 @@ class _FeaturedJobScreenState extends State<FeaturedJobScreen> {
                                               const SizedBox(height: 2),
                                               SizedBox(
                                                 width: 200,
-                                                child: Text(
-                                                  featuredjobContent[index]
-                                                      .subheading
-                                                      .toString(),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextDesign()
-                                                      .smallgreytext,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      featuredjobContent[index]
+                                                          .companytitle
+                                                          .toString(),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextDesign()
+                                                          .smallgreytext,
+                                                    ),
+                                                    Text(
+                                                      featuredjobContent[index]
+                                                          .country
+                                                          .toString(),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextDesign()
+                                                          .smallgreytext,
+                                                    ),
+                                                    Text(
+                                                      featuredjobContent[index]
+                                                          .city
+                                                          .toString(),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextDesign()
+                                                          .smallgreytext,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -157,13 +185,26 @@ class _FeaturedJobScreenState extends State<FeaturedJobScreen> {
                                     children: [
                                       SizedBox(
                                         width: 150,
-                                        child: Text(
-                                          featuredjobContent[index]
-                                              .pricerange
-                                              .toString(),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextDesign().pricetext,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              "${featuredjobContent[index].salmin.toString()}"
+                                              ' - ',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextDesign().pricetext,
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                "${featuredjobContent[index].salmax.toString()}"
+                                                ' a year',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextDesign().pricetext,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Row(
