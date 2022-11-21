@@ -22,7 +22,8 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final token;
+  const HomePage({Key? key, this.token}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        leading: const MenuWidget(),
+        leading: MenuWidget(),
         title: Text(
           'HOME',
           style: TextDesign().appbartext,
@@ -374,9 +375,8 @@ class _HomePageState extends State<HomePage> {
                                                         child: Row(
                                                           children: [
                                                             Text(
-                                                              jobContent[index]
-                                                                  .companytitle
-                                                                  .toString(),
+                                                              "${jobContent[index].companytitle}"
+                                                              " , ",
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow
@@ -385,9 +385,8 @@ class _HomePageState extends State<HomePage> {
                                                                   .smallgreytext,
                                                             ),
                                                             Text(
-                                                              jobContent[index]
-                                                                  .country
-                                                                  .toString(),
+                                                              "${jobContent[index].country}"
+                                                              " , ",
                                                               maxLines: 1,
                                                               overflow:
                                                                   TextOverflow
@@ -617,7 +616,48 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => const JobSingleScreen());
+                                      Get.to(() => JobSingleScreen(
+                                            heading: featuredjobContent[index]
+                                                .heading
+                                                .toString(),
+                                            image: ApiConstant.imagBaseUrl +
+                                                featuredjobContent[index]
+                                                    .image
+                                                    .toString(),
+                                            companytitle:
+                                                featuredjobContent[index]
+                                                    .companytitle
+                                                    .toString(),
+                                            country: featuredjobContent[index]
+                                                .country
+                                                .toString(),
+                                            city: featuredjobContent[index]
+                                                .city
+                                                .toString(),
+                                            description:
+                                                featuredjobContent[index]
+                                                    .description
+                                                    .toString(),
+                                            salmin: featuredjobContent[index]
+                                                .salmin
+                                                .toString(),
+                                            salmax: featuredjobContent[index]
+                                                .salmax
+                                                .toString(),
+                                            jobtype: featuredjobContent[index]
+                                                .jobtype
+                                                .toString(),
+                                            id: featuredjobContent[index]
+                                                .id
+                                                .toString(),
+                                            qualification:
+                                                featuredjobContent[index]
+                                                    .id
+                                                    .toString(),
+                                            deadline: featuredjobContent[index]
+                                                .deadline
+                                                .toString(),
+                                          ));
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,

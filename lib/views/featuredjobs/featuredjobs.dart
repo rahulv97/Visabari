@@ -70,7 +70,42 @@ class _FeaturedJobScreenState extends State<FeaturedJobScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => const JobSingleScreen());
+                              Get.to(() => JobSingleScreen(
+                                    heading: featuredjobContent[index]
+                                        .heading
+                                        .toString(),
+                                    image: ApiConstant.imagBaseUrl +
+                                        featuredjobContent[index]
+                                            .image
+                                            .toString(),
+                                    companytitle: featuredjobContent[index]
+                                        .companytitle
+                                        .toString(),
+                                    country: featuredjobContent[index]
+                                        .country
+                                        .toString(),
+                                    city: featuredjobContent[index]
+                                        .city
+                                        .toString(),
+                                    description: featuredjobContent[index]
+                                        .description
+                                        .toString(),
+                                    salmin: featuredjobContent[index]
+                                        .salmin
+                                        .toString(),
+                                    salmax: featuredjobContent[index]
+                                        .salmax
+                                        .toString(),
+                                    jobtype: featuredjobContent[index]
+                                        .jobtype
+                                        .toString(),
+                                    id: featuredjobContent[index].id.toString(),
+                                    qualification:
+                                        featuredjobContent[index].id.toString(),
+                                    deadline: featuredjobContent[index]
+                                        .deadline
+                                        .toString(),
+                                  ));
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,

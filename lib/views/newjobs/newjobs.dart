@@ -68,7 +68,28 @@ class _NewJobsScreenState extends State<NewJobsScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => const JobSingleScreen());
+                              Get.to(() => JobSingleScreen(
+                                    heading:
+                                        jobContent[index].heading.toString(),
+                                    image: ApiConstant.imagBaseUrl +
+                                        jobContent[index].image.toString(),
+                                    companytitle: jobContent[index]
+                                        .companytitle
+                                        .toString(),
+                                    country:
+                                        jobContent[index].country.toString(),
+                                    city: jobContent[index].city.toString(),
+                                    description: jobContent[index]
+                                        .description
+                                        .toString(),
+                                    salmin: jobContent[index].salmin.toString(),
+                                    salmax: jobContent[index].salmax.toString(),
+                                    jobtype:
+                                        jobContent[index].jobtype.toString(),
+                                    id: jobContent[index].id.toString(),
+                                    deadline:
+                                        jobContent[index].deadline.toString(),
+                                  ));
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,

@@ -17,7 +17,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class DrawerPageScreen extends StatefulWidget {
-  const DrawerPageScreen({Key? key}) : super(key: key);
+  final token;
+  const DrawerPageScreen({Key? key, this.token}) : super(key: key);
 
   @override
   State<DrawerPageScreen> createState() => _DrawerPageScreenState();
@@ -322,7 +323,8 @@ class _DrawerPageScreenState extends State<DrawerPageScreen> {
                         ),
                       ],
                     ),
-                    onPressed: () => MyDialogBox().dialog(context)),
+                    onPressed: () => MyDialogBox()
+                        .dialog(context, "bearer " + "${widget.token}"))
               ],
             ),
           ),

@@ -1,10 +1,11 @@
+import 'package:dear_jobs/network/apiservice.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MyDialogBox {
-  Future dialog(BuildContext context) => showDialog(
+  Future dialog(BuildContext context, String token) => showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => Dialog(
@@ -51,7 +52,9 @@ class MyDialogBox {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(primary: upColor),
-                    onPressed: () {},
+                    onPressed: () {
+                      ApiService().logoutApi(context, token);
+                    },
                     child: Text(
                       'Logout',
                       style: TextDesign().smallboldtext,

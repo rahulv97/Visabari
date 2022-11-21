@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomNavbarScreen extends StatefulWidget {
-  const BottomNavbarScreen({Key? key}) : super(key: key);
+  final token;
+  const BottomNavbarScreen({Key? key, this.token}) : super(key: key);
 
   @override
   State<BottomNavbarScreen> createState() => _BottomNavbarScreenState();
@@ -20,12 +21,21 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
   int selectindex = 0;
 
   final screens = [
-    const HomePage(),
+    HomePage(token: token1),
     const BookmarScreen(),
     const AppliedJobsScreen(),
     const MessageScreen(),
     const ShowProfile(),
   ];
+
+  static var token1;
+
+  @override
+  void initState() {
+    super.initState();
+    token1 = widget.token;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

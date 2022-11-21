@@ -18,6 +18,7 @@ class JobSingleScreen extends StatefulWidget {
   final salmax;
   final jobtype;
   final deadline;
+  final qualification;
   final id;
   const JobSingleScreen(
       {Key? key,
@@ -31,6 +32,7 @@ class JobSingleScreen extends StatefulWidget {
       this.salmin,
       this.salmax,
       this.deadline,
+      this.qualification,
       this.id})
       : super(key: key);
 
@@ -102,29 +104,27 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                         ),
                         const SizedBox(height: 10),
                         Row(
+                          mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  widget.salmin + ' - ',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextDesign().lighttext,
-                                ),
-                                Text(
-                                  widget.salmax + " a year",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextDesign().lighttext,
-                                ),
-                              ],
+                            Text(
+                              widget.salmin + ' - ',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextDesign().lighttext,
+                            ),
+                            Flexible(
+                              child: Text(
+                                widget.salmax + " a year",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextDesign().lighttext,
+                              ),
                             ),
                             const SizedBox(width: 20),
                             Container(
-                              height: 30,
-                              width: 80,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 5),
                               decoration: BoxDecoration(
                                 color: white,
                                 borderRadius: BorderRadius.circular(5),
@@ -141,7 +141,7 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                                   style: TextDesign().lighttext,
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -161,7 +161,6 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                               ),
                               const SizedBox(width: 10),
                               SizedBox(
-                                height: 50,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -169,24 +168,38 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                                       widget.companytitle,
                                       style: TextDesign().headingtext,
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Icon(
-                                          CupertinoIcons.location_solid,
-                                          size: 20,
-                                          color: grey,
-                                        ),
-                                        Text(
-                                          widget.country,
-                                          style: TextDesign().lighttext,
-                                        ),
-                                      ],
+                                    SizedBox(
+                                      width: 180,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.location_solid,
+                                            size: 20,
+                                            color: grey,
+                                          ),
+                                          Flexible(
+                                            child: Text(
+                                              "${widget.country}"
+                                              " , ",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextDesign().lighttext,
+                                            ),
+                                          ),
+                                          Flexible(
+                                            child: Text(
+                                              "${widget.city}",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextDesign().lighttext,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 30),
                               Text(
                                 widget.deadline,
                                 style: TextDesign().smallgreytext,
@@ -199,7 +212,9 @@ class _JobSingleScreenState extends State<JobSingleScreen> {
                     ),
                   ),
                 ),
-                const TabViewWidget(),
+                TabViewWidget(
+                  id: widget.id,
+                ),
               ],
             ),
           ),

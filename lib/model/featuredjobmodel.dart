@@ -1,5 +1,15 @@
 class FeaturedJobModel {
-  String? heading, companytitle, country, city, description, salmin, salmax;
+  String? heading,
+      companytitle,
+      country,
+      city,
+      description,
+      salmin,
+      salmax,
+      jobtype,
+      qualification,
+      deadline,
+      id;
   String? image;
 
   FeaturedJobModel({
@@ -11,6 +21,10 @@ class FeaturedJobModel {
     this.image,
     this.salmin,
     this.salmax,
+    this.jobtype,
+    this.qualification,
+    this.deadline,
+    this.id,
   });
 }
 

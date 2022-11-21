@@ -4,7 +4,8 @@ import 'package:dear_jobs/views/tabviewscree/tabviewscreenfirst.dart';
 import 'package:flutter/material.dart';
 
 class TabViewWidget extends StatefulWidget {
-  const TabViewWidget({Key? key}) : super(key: key);
+  final id;
+  const TabViewWidget({Key? key, this.id}) : super(key: key);
 
   @override
   State<TabViewWidget> createState() => _TabViewWidgetState();
@@ -40,11 +41,13 @@ class _TabViewWidgetState extends State<TabViewWidget> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 1.5,
+            height: MediaQuery.of(context).size.height * 1.45,
             width: double.infinity,
-            child: const TabBarView(
+            child: TabBarView(
               children: [
-                TabViewScreenFirst(),
+                TabViewScreenFirst(
+                  id: widget.id,
+                ),
                 TabViewScreenSecond(),
               ],
             ),

@@ -293,6 +293,7 @@ class _TabViewScreenSecondState extends State<TabViewScreenSecond> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
+                  const SizedBox(height: 10),
                   RatingStars(
                     value: starvalue.toDouble(),
                     starBuilder: (index, color) => Icon(

@@ -1,3 +1,4 @@
+import 'package:dear_jobs/model/newjobmodel.dart';
 import 'package:dear_jobs/model/relatedjobsmodel.dart';
 import 'package:dear_jobs/network/apiservice.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
@@ -6,10 +7,6 @@ import 'package:dear_jobs/views/relatedjobs/relatedjobspage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-List education = [
-  "It is a long established fact that a reader will be distracted by content of"
-];
 
 class TabViewScreenFirst extends StatefulWidget {
   final id;
@@ -20,22 +17,26 @@ class TabViewScreenFirst extends StatefulWidget {
 }
 
 class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
-  bool isLoading = false;
-
-  void getjobData() async {
+  // ignore: prefer_typing_uninitialized_variables
+  var jobDetails;
+  bool isVisible = false;
+  void getData() async {
     setState(() {
-      isLoading = true;
+      isVisible = false;
     });
-    // await ApiService().jobDetailApi(widget.id);
+    jobDetails = await ApiService().jobDetailApi(widget.id);
+
     setState(() {
-      isLoading = false;
+      isVisible = true;
     });
   }
 
   @override
   void initState() {
+    setState(() {
+      getData();
+    });
     super.initState();
-    getjobData();
   }
 
   @override
@@ -46,7 +47,6 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
@@ -54,7 +54,6 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
                 style: TextDesign().headingtext,
               ),
             ),
-            const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
@@ -69,33 +68,32 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
                     ),
                   ],
                 ),
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: education.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.circle_fill,
-                              size: 10,
-                              color: black,
-                            ),
-                            const SizedBox(width: 10),
-                            Flexible(
-                              child: Text(
-                                education[index],
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.circle_fill,
+                        size: 10,
+                        color: black,
+                      ),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: isVisible
+                            ? Text(
+                                jobDetails['qualifications'].toString(),
+                                textAlign: TextAlign.justify,
+                                style: TextDesign().lighttext,
+                              )
+                            : Text(
+                                'Loading...',
                                 textAlign: TextAlign.justify,
                                 style: TextDesign().lighttext,
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Padding(
@@ -121,80 +119,27 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Column(
+                  child: Row(
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.circle_fill,
-                            size: 10,
-                            color: black,
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
-                          ),
-                        ],
+                      Icon(
+                        CupertinoIcons.circle_fill,
+                        size: 10,
+                        color: black,
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.circle_fill,
-                            size: 10,
-                            color: black,
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
-                          ),
-                        ],
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: isVisible
+                            ? Text(
+                                jobDetails['description'].toString(),
+                                textAlign: TextAlign.justify,
+                                style: TextDesign().lighttext,
+                              )
+                            : Text(
+                                'Loading...',
+                                textAlign: TextAlign.justify,
+                                style: TextDesign().lighttext,
+                              ),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.circle_fill,
-                            size: 10,
-                            color: black,
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.circle_fill,
-                            size: 10,
-                            color: black,
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -234,69 +179,20 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
                           ),
                           const SizedBox(width: 10),
                           Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
+                            child: isVisible
+                                ? Text(
+                                    jobDetails['requirements'].toString(),
+                                    textAlign: TextAlign.justify,
+                                    style: TextDesign().lighttext,
+                                  )
+                                : Text(
+                                    'Loading...',
+                                    textAlign: TextAlign.justify,
+                                    style: TextDesign().lighttext,
+                                  ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.circle_fill,
-                            size: 10,
-                            color: black,
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.circle_fill,
-                            size: 10,
-                            color: black,
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.circle_fill,
-                            size: 10,
-                            color: black,
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: Text(
-                              "It is a long established fact that a reader will be distracted by content of",
-                              textAlign: TextAlign.justify,
-                              style: TextDesign().lighttext,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -326,9 +222,7 @@ class _TabViewScreenFirstState extends State<TabViewScreenFirst> {
             ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: RelatedjobsContent.length <= 3
-                    ? RelatedjobsContent.length
-                    : 3,
+                itemCount: RelatedjobsContent.length,
                 itemBuilder: (BuildContext context, index) {
                   return Padding(
                     padding:

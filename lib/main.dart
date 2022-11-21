@@ -6,6 +6,7 @@ import 'package:dear_jobs/views/dashboard.dart';
 import 'package:dear_jobs/views/message/chatscreen.dart';
 import 'package:dear_jobs/views/message/messagepage.dart';
 import 'package:dear_jobs/views/newjobs/jobsingle.dart';
+import 'package:dear_jobs/views/onboarding/onboarding_screen.dart';
 import 'package:dear_jobs/views/profile/editprofile.dart';
 import 'package:dear_jobs/views/profile/showprofile.dart';
 import 'package:dear_jobs/widget/filterscreen.dart';
@@ -33,6 +34,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const DashboardScreen());
+        home: const OnBoardingScreen());
   }
 }

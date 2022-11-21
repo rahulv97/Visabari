@@ -10,6 +10,7 @@ import 'package:dear_jobs/network/apiconstant.dart';
 import 'package:dear_jobs/views/constant/colors.dart';
 import 'package:dear_jobs/views/dashboard.dart';
 import 'package:dear_jobs/views/helpers/texthelpers.dart';
+import 'package:dear_jobs/views/onboarding/onboarding_screen.dart';
 import 'package:dear_jobs/views/profile/editprofile.dart';
 import 'package:dear_jobs/views/tabviewscree/tabviewscreenfirst.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,7 @@ class ApiService {
   }
 
   Future userLogin(BuildContext context, email, pswd) async {
+    var token;
     try {
       var url = Uri.parse(ApiConstant.BASEURL + ApiConstant.login);
       var response = await http.post(url, headers: {
@@ -85,6 +87,7 @@ class ApiService {
         'email': email,
         'password': pswd,
       });
+      token = json.decode(response.body);
       if (response.statusCode == 200) {
         showDialog(
           context: context,
@@ -100,7 +103,9 @@ class ApiService {
         Future.delayed(
           const Duration(seconds: 2),
           () {
-            Get.offAll(() => const DashboardScreen());
+            Get.offAll(() => DashboardScreen(
+                  token: token,
+                ));
           },
         );
       } else {
@@ -121,6 +126,38 @@ class ApiService {
                 ],
               );
             });
+        return token;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future logoutApi(BuildContext context, String token) async {
+    try {
+      var url = Uri.parse(ApiConstant.BASEURL + ApiConstant.logout);
+      var response = await http.post(url, headers: {
+        'apiKey': '123456',
+        'Authorization': token,
+      });
+      if (response.statusCode == 200) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: upColor,
+                strokeWidth: 5,
+              ),
+            );
+          },
+        );
+        Future.delayed(
+          const Duration(seconds: 2),
+          () {
+            Get.offAll(() => const OnBoardingScreen());
+          },
+        );
       }
     } catch (e) {
       log(e.toString());
@@ -165,33 +202,16 @@ class ApiService {
 
   Future jobDetailApi(String id) async {
     try {
-      var url = Uri.parse(ApiConstant.BASEURL + ApiConstant.alljob + id);
+      var url = Uri.parse(ApiConstant.BASEURL + ApiConstant.jobdetail + id);
       var response = await http.post(
         url,
         headers: {
           'apiKey': '123456',
         },
       );
-      List jobData = json.decode(response.body.toString());
-
+      var jobData = json.decode(response.body.toString());
       if (response.statusCode == 200) {
-        jobContent.clear();
-        for (var i = 0; i < jobData.length; i++) {
-          jobContent.add(
-            NewJobModel(
-              heading: jobData[i]['title'].toString(),
-              companytitle: jobData[i]['title_bn'].toString(),
-              country: jobData[i]['country_id'].toString(),
-              city: jobData[i]['locality_id'].toString(),
-              description: jobData[i]['description'].toString(),
-              image: jobData[i]['image'].toString(),
-              salmin: jobData[i]['salary_min'].toString(),
-              salmax: jobData[i]['salary_max'].toString(),
-              qualification: jobData[i]['qualifications'].toString(),
-              id: jobData[i]['id'].toString(),
-            ),
-          );
-        }
+        return jobData;
       }
     } catch (e) {
       log(e.toString());
@@ -222,6 +242,9 @@ class ApiService {
               image: jobData[i]['image'].toString(),
               salmin: jobData[i]['salary_min'].toString(),
               salmax: jobData[i]['salary_max'].toString(),
+              jobtype: jobData[i]['job_type'].toString(),
+              deadline: jobData[i]['deadline'].toString(),
+              id: jobData[i]['id'].toString(),
             ),
           );
         }
