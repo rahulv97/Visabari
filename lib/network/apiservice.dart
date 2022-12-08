@@ -36,28 +36,51 @@ class ApiService {
         'role': role,
       });
       if (response.statusCode == 200) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: upColor,
-                strokeWidth: 2,
-              ),
-            );
-          },
-        );
-        Future.delayed(
-          const Duration(seconds: 5),
-          () {
-            Get.offAll(() => const DashboardScreen());
-          },
-        );
+        print(jsonDecode(response.body)["status"]);
+        if (jsonDecode(response.body)["status"] == "success") {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: upColor,
+                  strokeWidth: 2,
+                ),
+              );
+            },
+          );
+          Future.delayed(
+            const Duration(seconds: 5),
+            () {
+              Get.offAll(() => const DashboardScreen());
+            },
+          );
+        } else {
+          print(jsonDecode(response.body)["data"]["email"]);
+
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                Future.delayed(const Duration(seconds: 2), () {
+                  Get.back();
+                });
+                return AlertDialog(
+                  actions: [
+                    Center(
+                      child: Text(
+                        jsonDecode(response.body)["data"]["email"][0],
+                        style: TextDesign().lighttext,
+                      ),
+                    )
+                  ],
+                );
+              });
+        }
       } else {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              Future.delayed(const Duration(seconds: 1), () {
+              Future.delayed(const Duration(seconds: 2), () {
                 Get.back();
               });
               return AlertDialog(
@@ -78,6 +101,8 @@ class ApiService {
   }
 
   Future userLogin(BuildContext context, email, pswd) async {
+    print(email + " " + pswd);
+
     var token;
     try {
       var url = Uri.parse(ApiConstant.BASEURL + ApiConstant.login);
@@ -88,7 +113,10 @@ class ApiService {
         'password': pswd,
       });
       token = json.decode(response.body);
+      print(token);
       if (response.statusCode == 200) {
+        print(token);
+
         showDialog(
           context: context,
           builder: (BuildContext context) {

@@ -95,12 +95,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                     validator: (username) {
                                       if (username!.isEmpty) {
                                         return 'enter username';
+                                      } else if (!RegExp(
+                                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          .hasMatch(username)) {
+                                        return 'Email format is invalid!';
                                       }
                                       return null;
                                     },
                                   ),
                                   const SizedBox(height: 20),
                                   TextFormField(
+                                    controller: pswdController,
                                     obscureText: isPasswordVisible,
                                     decoration: InputDecoration(
                                       hintText: 'Password',

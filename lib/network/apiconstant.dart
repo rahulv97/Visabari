@@ -1,17 +1,12 @@
 class ApiConstant {
   // ignore: non_constant_identifier_names
   static String BASEURL = 'https://fwcms.net/api/v1/';
-
   static String imagBaseUrl = 'https://fwcms.net/';
-
   // auth screen api-->
   static String register = 'register';
-
   static String login = 'login';
-
   // logout api--->
   static String logout = 'logout';
-
   static String alljob = 'jobs/get';
   static String jobdetail = 'job-details/get/';
   static String featuredjobs = 'featured/job/get';
